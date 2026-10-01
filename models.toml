@@ -1,0 +1,53 @@
+# Modell-Profile für den Vergleich. Auswahl per: python run.py <repo> --profile <name>[,<name>...]
+# Hier stehen KEINE Keys, nur der Name der Umgebungsvariable (api_key_env).
+#
+# Felder:
+#   provider   = "anthropic" | "openai" (Chat Completions) | "openai-responses" (Responses-API)
+#   base_url   = Endpunkt laut Langdock-Doku
+#   model      = Modell-ID, so wie Langdock sie erwartet (kann von den Anthropic/OpenAI-Namen abweichen!)
+#   api_key_env= Name der Umgebungsvariable mit dem Key
+#   auth       = (anthropic) "bearer" oder "x-api-key"
+#   max_tokens_param = (openai) "max_completion_tokens" oder "max_tokens"
+#   reasoning_effort = (openai, optional) "none"|"low"|"medium"|"high"; wird nur gesendet, wenn gesetzt
+#   tpm_budget = (optional) Tokens/Minute-Limit dieses Modells, überschreibt SRA_TPM_BUDGET
+
+[profiles.sonnet]
+provider    = "anthropic"
+base_url    = "https://api.langdock.com/anthropic/eu"
+model       = "claude-sonnet-5-5"
+api_key_env = "LANGDOCK_API_KEY"
+auth        = "bearer"
+tpm_budget  = 110000
+
+[profiles.opus]
+provider    = "anthropic"
+base_url    = "https://api.langdock.com/anthropic/eu"
+model       = "claude-opus-5-5"
+api_key_env = "LANGDOCK_API_KEY"
+auth        = "bearer"
+
+[profiles.haiku]
+provider    = "anthropic"
+base_url    = "https://api.langdock.com/anthropic/eu"
+model       = "claude-haiku-4-5-20251001"
+api_key_env = "LANGDOCK_API_KEY"
+auth        = "bearer"
+
+# OpenAI-Modell über Langdocks OpenAI-Endpunkt, Responses-API (Tools + Reasoning funktionieren zusammen).
+# Reasoning-Stufe bei Bedarf mit reasoning_effort steuern (z. B. "medium"); ohne Angabe gilt der Modell-Default.
+[profiles.gpt-6-luna]
+provider    = "openai-responses"
+base_url    = "https://api.langdock.com/openai/eu/v1"
+model       = "gpt-6-luna"
+api_key_env = "LANGDOCK_API_KEY"
+# Falls die API bei Folgeaufrufen über fehlende/ungültige Reasoning-Items klagt, einschalten:
+# responses_stateless = true
+
+# Dasselbe Modell über Chat Completions OHNE Reasoning (Tools + Reasoning gehen dort nicht).
+# Nur als Gegenprobe gedacht; die Qualität ist erfahrungsgemäß deutlich schlechter.
+[profiles.gpt-6-luna-noreason]
+provider    = "openai"
+base_url    = "https://api.langdock.com/openai/eu/v1"
+model       = "gpt-6-luna"
+api_key_env = "LANGDOCK_API_KEY"
+reasoning_effort = "none"

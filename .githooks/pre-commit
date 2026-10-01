@@ -1,0 +1,3 @@
+#!/bin/sh
+# Aktivieren (einmal pro Klon): git config core.hooksPath .githooks
+exec "$(git rev-parse --show-toplevel)/scripts/guard.sh"

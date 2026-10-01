@@ -1,0 +1,28 @@
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
+# macOS
+.DS_Store
+
+# Security-Reports, Findings und Audit-Logs gehören NIE ins Git (zusätzlich geprüft von scripts/guard.sh)
+reports/
+sentinel-*
+*.security-report.md
+security-review-*.md
+*.audit.jsonl
+*.findings.jsonl
+*.findings.md
+
+# Secrets und Schlüssel
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+id_rsa*
+id_ed25519*
